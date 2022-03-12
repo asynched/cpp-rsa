@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <vector>
 #include <array>
@@ -6,43 +5,47 @@
 #ifndef ENCRYPTION_H
 #define ENCRYPTION_H
 
-class RSAStaticKey
+namespace encryption
 {
-private:
-    uint64_t exponent;
-    uint64_t modulus;
 
-public:
-    RSAStaticKey();
+    class RSAStaticKey
+    {
+    private:
+        uint64_t exponent;
+        uint64_t modulus;
 
-    RSAStaticKey(uint64_t exponent, uint64_t modulus);
+    public:
+        RSAStaticKey();
 
-    uint64_t get_exponent();
-    uint64_t get_modulus();
-    std::string to_string();
-};
+        RSAStaticKey(uint64_t exponent, uint64_t modulus);
 
-class RSAEncryption
-{
-private:
-    RSAStaticKey public_key;
-    RSAStaticKey private_key;
+        uint64_t get_exponent();
+        uint64_t get_modulus();
+        std::string to_string();
+    };
 
-public:
-    RSAEncryption(RSAStaticKey public_key, RSAStaticKey private_key);
-    std::string encrypt(std::string message);
-    std::string decrypt(std::string message);
-};
+    class RSAEncryption
+    {
+    private:
+        RSAStaticKey public_key;
+        RSAStaticKey private_key;
 
-class RSAKey
-{
-private:
-    static std::array<uint64_t, 3> generate_keys(std::vector<uint64_t> &primes);
-    static uint64_t define_e(uint64_t phi_n);
-    static uint64_t define_d(uint64_t e, uint64_t phi_n);
+    public:
+        RSAEncryption(RSAStaticKey public_key, RSAStaticKey private_key);
+        std::string encrypt(std::string message);
+        std::string decrypt(std::string message);
+    };
 
-public:
-    static RSAEncryption from(std::vector<uint64_t> &primes);
-};
+    class RSAKey
+    {
+    private:
+        static std::array<uint64_t, 3> generate_keys(std::vector<uint64_t> &primes);
+        static uint64_t define_e(uint64_t phi_n);
+        static uint64_t define_d(uint64_t e, uint64_t phi_n);
+
+    public:
+        static RSAEncryption from(std::vector<uint64_t> &primes);
+    };
+}
 
 #endif

@@ -11,16 +11,20 @@ int main(void)
 {
     std::srand(std::time(NULL));
 
-    auto encryption = RSAKey::from(primes);
+    auto encryption = encryption::RSAKey::from(primes);
 
-    std::string message;
+    while (1)
+    {
+        std::string message;
 
-    std::cout << "Type in a message: ";
-    std::getline(std::cin, message);
+        std::cout << "[PROMPT] Type in a message: ";
+        std::getline(std::cin, message);
 
-    auto encrypted = encryption.encrypt(message);
-    std::cout << encrypted << std::endl;
+        auto encrypted = encryption.encrypt(message);
+        std::cout << "[ENCRYPTED] " << encrypted << std::endl;
 
-    auto decrypted = encryption.decrypt(encrypted);
-    std::cout << decrypted << std::endl;
+        auto decrypted = encryption.decrypt(encrypted);
+        std::cout << "[DECRYPTED] " << decrypted << std::endl
+                  << std::endl;
+    }
 }
