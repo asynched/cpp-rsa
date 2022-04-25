@@ -1,20 +1,19 @@
+#include <ctime>
 #include <iostream>
 #include <vector>
-#include <ctime>
 
-#include "utils/math.h"
 #include "core/encryption.h"
+#include "utils/math.h"
 
 static std::vector<uint64_t> primes = math::generate_primes(10000);
 
-int main(void)
-{
+int main(void) {
+    using namespace encryption;
     std::srand(std::time(NULL));
 
-    auto encryption = encryption::RSAKey::from(primes);
+    auto encryption = RSAEncryption::from(primes);
 
-    while (1)
-    {
+    while (1) {
         std::string message;
 
         std::cout << "[PROMPT] Type in a message: ";
@@ -24,7 +23,6 @@ int main(void)
         std::cout << "[ENCRYPTED] " << encrypted << std::endl;
 
         auto decrypted = encryption.decrypt(encrypted);
-        std::cout << "[DECRYPTED] " << decrypted << std::endl
-                  << std::endl;
+        std::cout << "[DECRYPTED] " << decrypted << std::endl << std::endl;
     }
 }
